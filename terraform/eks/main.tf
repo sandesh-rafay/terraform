@@ -36,8 +36,6 @@ resource "aws_iam_role_policy_attachment" "eks_service_policy" {
 # Basic VPC networking for EKS
 # data "aws_availability_zones" "available" {}
 
-availability_zone = "us-west-1"
-
 resource "aws_vpc" "eks_vpc" {
   cidr_block = "10.0.0.0/16"
 }
@@ -46,7 +44,7 @@ resource "aws_subnet" "eks_subnet" {
   count             = 2
   vpc_id            = aws_vpc.eks_vpc.id
   cidr_block        = cidrsubnet(aws_vpc.eks_vpc.cidr_block, 8, count.index)
-  availability_zone = data.aws_availability_zones.available.names[count.index]
+  availability_zone = element(["us-west-1a", "us-west-1b"], count.index)
 }
 
 resource "aws_security_group" "eks_sg" {
