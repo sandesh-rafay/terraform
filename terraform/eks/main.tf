@@ -34,7 +34,9 @@ resource "aws_iam_role_policy_attachment" "eks_service_policy" {
 }
 
 # Basic VPC networking for EKS
-data "aws_availability_zones" "available" {}
+# data "aws_availability_zones" "available" {}
+
+availability_zone = "us-west-1"
 
 resource "aws_vpc" "eks_vpc" {
   cidr_block = "10.0.0.0/16"
