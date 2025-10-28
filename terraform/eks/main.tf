@@ -70,3 +70,13 @@ resource "aws_eks_cluster" "this" {
 output "eks_cluster_name" {
   value = aws_eks_cluster.this.name
 }
+
+output "debug_vars" {
+  value = {
+    region = var.region
+    access_key_set = var.aws_access_key != "" ? "yes" : "no"
+    secret_key_set = var.aws_secret_key != "" ? "yes" : "no"
+    cluster_name = var.cluster_name
+  }
+  sensitive = true
+}
